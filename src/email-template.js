@@ -11,7 +11,9 @@ const debug = Debug('email-templates:email-template')
 export default class EmailTemplate {
   constructor (path, options = {}) {
     this.path = path
+    console.log('this.path', this.path);
     this.dirname = basename(path)
+    console.log('this.dirname', this.dirname);
     this.options = options
     debug('Creating Email template for path %s', basename(path))
      // localized templates cache
@@ -41,13 +43,14 @@ export default class EmailTemplate {
       return readContents(p, type)
     })
     .then((files) => {
+      console.log('node-email-template files', files);
       let [html, text, style, subject] = files
 
-      if (!html && !text) {
-        let err = new Error(`Neither html nor text template files found or are both empty in path ${this.dirname}`)
-        err.code = 'ENOENT'
-        throw err
-      }
+//       if (!html && !text) {
+//         let err = new Error(`Neither html nor text template files found or are both empty in path ${this.dirname}`)
+//         err.code = 'ENOENT'
+//         throw err
+//       }
 
       if (html) {
         debug('Found HTML file %s in %s', basename(html.filename), this.dirname)
